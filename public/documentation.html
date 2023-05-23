@@ -6,9 +6,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentation</title>
     <link rel="icon" type="image/x-icon" href="/favicon-16x16.png">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Movie API</h1>
     <p>The Movie Api is built on the MERN stack. It allows the user to access a database of Movies, returns data on things like genres actors directors etc. Users can also create a profile to save their own favourites.</p>
+    <table>
+        <thead>
+          <tr>
+            <th>Business Logic</th>
+            <th>URL</th>
+            <th>HTTP Method</th>
+            <th>Request body data format</th>
+            <th>Response body data format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Return a list of ALL movies</td>
+            <td>/movies</td>
+            <td>GET</td>
+            <td>None</td>
+            <td>Successful GET request returning data on all the movies</td>
+          </tr>
+        </tbody>
+        <tbody>
+            <tr>
+              <td>Return data (description, genre, director, image URL, whether it is featured or not) about a single movie by title</td>
+              <td>/movies/:title</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>Successful GET request returning all data on a single movie</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Return data about a genre (description) by name/title (e.g., “Thriller”);</td>
+              <td>/movies/genres/:name</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>Successful GET request returning data on the genre of a single movie</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Return data about a director (bio, birth year, death year) by name;</td>
+              <td>/movies/directors/:name</td>
+              <td>GET</td>
+              <td>None</td>
+              <td>Successful GET request returning all data on a single director by name</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Allow new users to register</td>
+              <td>/users</td>
+              <td>POST</td>
+              <td>A JSON object holding<br>
+                data about the user to<br>
+                add, structured like:<br>
+                {<br>
+                name : "Paulina Gomez",<br>
+                username : "pgomez123",<br>
+                email-address : "pgomez@gmai.com"<br>
+                }
+                </td>
+              <td>Successful POST request adding a user</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Allow users to update their user info (username)</td>
+              <td>/users/:username</td>
+              <td>PUT</td>
+              <td>None</td>
+              <td>Successful PUT request updating a user's username</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Allow users to add a movie to their list of favorites</td>
+              <td>/users/favourites/:title</td>
+              <td>POST</td>
+              <td>None</td>
+              <td>Successful POST request adding a movie to a user's favourites</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Allow users to remove a movie from their list of favorites</td>
+              <td>/users/favourites/:title</td>
+              <td>DELETE</td>
+              <td>None</td>
+              <td>Successful DELETE request removing a movie from a user's favourites</td>
+            </tr>
+          </tbody>
+          <tbody>
+            <tr>
+              <td>Allow existing users to deregister</td>
+              <td>/users/email/:username</td>
+              <td>DELETE</td>
+              <td>None</td>
+              <td>Successful DELETE request deregistering a user</td>
+            </tr>
+          </tbody>
+      </table>
+      
 </body>
 </html>
