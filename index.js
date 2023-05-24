@@ -97,12 +97,12 @@ app.put('/users/:username', (req, res) => {
 });
 
 // Allow users to add a movie to their list of favorites (showing only a text that a movie has been added—more on this later);
-app.post('/users/favourites/:title', (req, res) => {
+app.post('/users/favourites/', (req, res) => {
   res.send(`Successful POST request adding a movie to a user's favourites`);
 });
 
 // Allow users to remove a movie from their list of favorites (showing only a text that a movie has been removed—more on this later);
-app.put('/users/favourites/:title', (req, res) => {
+app.put('/users/favourites/', (req, res) => {
   res.send(`Successful PUT request removing a movie from a user's favourites`);
 });
 
