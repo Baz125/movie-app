@@ -86,9 +86,13 @@
           <tbody>
             <tr>
               <td>Allow users to add a movie to their list of favorites</td>
-              <td>/users/favourites/:title</td>
+              <td>/users/favourites</td>
               <td>POST</td>
-              <td>None</td>
+              <td>A JSON object holding
+                data about movie to be added, based on that movie's ID:
+                {
+                  _id: ObjectId("64707f8a7f5c9419caead3d0")
+                }</td>
               <td>Successful POST request adding a movie to a user's favourites</td>
             </tr>
           </tbody>
