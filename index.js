@@ -1,64 +1,18 @@
-const express = require('express'),
-  morgan = require('morgan'),
+const mongoose = require('mongoose');
+const Models = require('./models');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+mongoose.connect('mongodb://localhost:27017/movieDB', {useNewURLParser: true, useUnifiedTopology: true });
+const express = require('express');
+const  morgan = require('morgan'),
   fs = require('fs'),
   path = require('path'),
-  bodyParser = require('body-parser'),
-  uuid = require('uuid');
-
-let movies = [
-  {
-    title: 'Interstellar',
-    director: {
-      name: 'Christopher Nolan',
-      birthYear: '1970'
-    },
-    genre: 'SciFi',
-    description: `A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.`,
-    imageURL: 'https://posters.movieposterdb.com/15_03/2014/816692/l_816692_284eb9d5.jpg'
-  },  
-  {
-    title: 'The Last of the Mohicans',
-    director: {
-      name: 'Michael Mann',
-      birthYear: '1943'
-    },
-    genre: 'Historical',
-    description: 'Three trappers protect the daughters of a British Colonel in the midst of the French and Indian War.',
-    imageURL: 'https://posters.movieposterdb.com/12_05/1992/104691/l_104691_746b6d56.jpg'
-  },
-  {
-    title: 'Shaun of the Dead',
-    director: {
-      name: 'Edgar Wright',
-      birthYear: '1974'
-    },
-    genre: 'Comedy',
-    description: 'The uneventful, aimless lives of a London electronics salesman and his layabout roommate are disrupted by the zombie apocalypse.',
-    imageURL: 'https://posters.movieposterdb.com/05_08/2004/0365748/l_47636_0365748_26fdd550.jpg'
-  },
-  {
-    title: 'The Departed',
-    director: {
-      name: 'Martin Scorsese',
-      birthYear: '1942'
-    },
-    genre: 'Crime',
-    description: 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
-    imageURL: 'https://posters.movieposterdb.com/06_10/2006/0407887/l_138581_0407887_3f7c779a.jpg'
-  },
-  {
-    title: 'Star Wars: Revenge of the Sith',
-    director: {
-      name: 'George Lucas',
-      birthYear: '1944'
-    },
-    genre: 'Fantasy',
-    description: 'Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.',
-    imageURL: 'https://posters.movieposterdb.com/12_04/2005/121766/l_121766_0ba97f41.jpg'
-  }
-];
+  bodyParser = require('body-parser')
 
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'),{flags: 'a'})
 app.use(bodyParser.json());
 app.use(morgan('common', {stream: accessLogStream}));
@@ -88,8 +42,30 @@ app.get('/movies/directors/:name', (req, res) => {
 
 // Allow new users to register;
 app.post('/users',  (req, res) => {
-  res.send('Successful POST request adding a user')
-})
+  Users.findOne({ Username: req.body.Username })
+  .then((user) => {
+    if (user) {
+      return res.status(400).send(req.body.Username + 'already exists');
+    } else {
+      Users
+        .create({
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        })
+        .then ((user) => {res.status(201).json(user) })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send('Error: ' + error);
+      })
+    }
+  })
+  .catch((error) => {
+    console.error(error);
+    res.status(500).send('Error: ' + error);
+  });
+});
 
 // Allow users to update their user info (username);
 app.put('/users/:username', (req, res) => {
@@ -111,8 +87,6 @@ app.delete('/users/email/:username', (req, res) => {
   res.send(`Successful DELETE request deregistering a user`);
 });
 
-
-
 app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Something broke!');
@@ -121,3 +95,56 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
   console.log('Your app is listening on port 8080.');
 });
+
+// let movies = [
+//   {
+//     title: 'Interstellar',
+//     director: {
+//       name: 'Christopher Nolan',
+//       birthYear: '1970'
+//     },
+//     genre: 'SciFi',
+//     description: `A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.`,
+//     imageURL: 'https://posters.movieposterdb.com/15_03/2014/816692/l_816692_284eb9d5.jpg'
+//   },  
+//   {
+//     title: 'The Last of the Mohicans',
+//     director: {
+//       name: 'Michael Mann',
+//       birthYear: '1943'
+//     },
+//     genre: 'Historical',
+//     description: 'Three trappers protect the daughters of a British Colonel in the midst of the French and Indian War.',
+//     imageURL: 'https://posters.movieposterdb.com/12_05/1992/104691/l_104691_746b6d56.jpg'
+//   },
+//   {
+//     title: 'Shaun of the Dead',
+//     director: {
+//       name: 'Edgar Wright',
+//       birthYear: '1974'
+//     },
+//     genre: 'Comedy',
+//     description: 'The uneventful, aimless lives of a London electronics salesman and his layabout roommate are disrupted by the zombie apocalypse.',
+//     imageURL: 'https://posters.movieposterdb.com/05_08/2004/0365748/l_47636_0365748_26fdd550.jpg'
+//   },
+//   {
+//     title: 'The Departed',
+//     director: {
+//       name: 'Martin Scorsese',
+//       birthYear: '1942'
+//     },
+//     genre: 'Crime',
+//     description: 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
+//     imageURL: 'https://posters.movieposterdb.com/06_10/2006/0407887/l_138581_0407887_3f7c779a.jpg'
+//   },
+//   {
+//     title: 'Star Wars: Revenge of the Sith',
+//     director: {
+//       name: 'George Lucas',
+//       birthYear: '1944'
+//     },
+//     genre: 'Fantasy',
+//     description: 'Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.',
+//     imageURL: 'https://posters.movieposterdb.com/12_04/2005/121766/l_121766_0ba97f41.jpg'
+//   }
+// ];
