@@ -27,16 +27,37 @@
             <td>/movies</td>
             <td>GET</td>
             <td>None</td>
-            <td>Successful GET request returning data on all the movies</td>
+            <td>A JSON object containing all movies and their attributes, one example movie is below:<br>
+              <pre>
+{
+"_id":{"$oid":"646f65160f0b1af535296045"},
+"Title":"Silence of the Lambs",
+"Description":"A young F.B.I. cadet must receive the help of an incarcerated and manipulative cannibal killer to help catch another serial killer, a madman who skins his victims.",
+"Genre":{
+  "Name":"Thriller",
+  "Description":"Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+  },
+"Director":{
+  "Name":"Jonathan Demme",
+  "Bio":"Robert Jonathan Demme was an American director, producer, and screenwriter.",
+  "Birth":"1944",
+  "Death":"2017"
+  },
+"ImagePath":"public/img/silenceofthelambs.jpg",
+"Actors":["Anthony Hopkins","Jodie Foster"],
+"Featured":true
+}
+                </pre>
+            </td>
           </tr>
         </tbody>
         <tbody>
             <tr>
-              <td>Return data (description, genre, director, image URL, whether it is featured or not) about a single movie by title</td>
+              <td>Return data about a single movie by title</td>
               <td>/movies/:title</td>
               <td>GET</td>
               <td>None</td>
-              <td>Successful GET request returning all data on a single movie</td>
+              <td>Same as above</td>
             </tr>
           </tbody>
           <tbody>
@@ -44,8 +65,18 @@
               <td>Return data about a genre (description) by name/title (e.g., “Thriller”);</td>
               <td>/movies/genres/:name</td>
               <td>GET</td>
-              <td>None</td>
-              <td>Successful GET request returning data on the genre of a single movie</td>
+              <td>
+              </td>
+              <td>
+                JSON data containing a genre and its attributes, example:
+                <pre>
+"Genre": 
+{
+  "Name": "Thriller",
+  "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
+},
+                </pre>
+              </td>
             </tr>
           </tbody>
           <tbody>
@@ -54,7 +85,18 @@
               <td>/movies/directors/:name</td>
               <td>GET</td>
               <td>None</td>
-              <td>Successful GET request returning all data on a single director by name</td>
+              <td>  
+                JSON data containing a director and its attributes, example:
+                <pre>
+  "Director":  
+{
+  "Name": "Jonathan Demme",
+  "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
+  "Birth": "1944",
+  "Death": "2017"
+},
+            </pre>
+              </td>
             </tr>
           </tbody>
           <tbody>
@@ -62,56 +104,114 @@
               <td>Allow new users to register</td>
               <td>/users</td>
               <td>POST</td>
-              <td>A JSON object holding<br>
-                data about the user to<br>
-                add, structured like:<br>
-                {<br>
-                name : "Paulina Gomez",<br>
-                username : "pgomez123",<br>
-                email-address : "pgomez@gmai.com"<br>
-                }
-                </td>
-              <td>Successful POST request adding a user</td>
+              <td>
+                A JSON object containing all required user information, example:
+                <pre>
+{
+  "Username": "celia",
+  "Password": "ahern",
+  "Email": "author@books.com",
+  "Birthday": "87654"
+  }
+                </pre>
+              </td>
+              <td>A Json object showing the fully created object, example: </td>
+              <pre>
+{
+  "Username": "celia",
+  "Password": "ahern",
+  "Email": "author@books.com",
+  "Birthday": "+087653-12-31T23:00:00.000Z",
+  "FavouriteMovies": [],
+  "_id": "647993734331eac4cba3db6c",
+  "__v": 0
+}
+              </pre>
             </tr>
           </tbody>
           <tbody>
             <tr>
-              <td>Allow users to update their user info (username)</td>
+              <td>Allow users to update their user information</td>
               <td>/users/:username</td>
               <td>PUT</td>
-              <td>None</td>
-              <td>Successful PUT request updating a user's username</td>
+              <td>
+                <pre>
+{
+  "Username": "celia123",
+  "Password": "ahern",
+  "Email": "author@greatbooks.com",
+  "Birthday": "87654"
+  }
+                  </pre>
+              </td>
+              <td>
+                <pre>
+{
+  "Username": "celia123",
+  "Password": "ahern",
+  "Email": "author@greatbooks.com",
+  "Birthday": "+087653-12-31T23:00:00.000Z",
+  "FavouriteMovies": [],
+  "_id": "647993734331eac4cba3db6c",
+  "__v": 0
+}
+                  </pre>
+              </td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Allow users to add a movie to their list of favorites</td>
-              <td>/users/favourites</td>
-              <td>POST</td>
-              <td>A JSON object holding
-                data about movie to be added, based on that movie's ID:
-                {
-                  _id: ObjectId("64707f8a7f5c9419caead3d0")
-                }</td>
-              <td>Successful POST request adding a movie to a user's favourites</td>
+              <td>/users/:username/movies/MovieID</td>
+              <td>PUT</td>
+              <td>None</td>
+              <td> A json object containng the full updated user data, example:
+                <pre>
+{
+  "_id": "647993734331eac4cba3db6c",
+  "Username": "celia",
+  "Password": "ahern",
+  "Email": "author@books.com",
+  "Birthday": "+087653-12-31T23:00:00.000Z",
+  "FavouriteMovies": [
+      "646f70258053843f1d7389ec"
+  ],
+  "__v": 0
+}
+                </pre>
+              </td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Allow users to remove a movie from their list of favorites</td>
-              <td>/users/favourites/:title</td>
+              <td>/users/:username/movies/MovieID</td>
               <td>DELETE</td>
               <td>None</td>
-              <td>Successful DELETE request removing a movie from a user's favourites</td>
+              <td> A json object containng the full updated user data, example:
+                <pre>
+{
+  "_id": "6479b3620ae3367e2c496e05",
+  "Username": "Seal",
+  "Password": "blockchain",
+  "Email": "clap@seal.com",
+  "Birthday": "1988-09-08T22:00:00.000Z",
+  "FavouriteMovies": [],
+  "__v": 0
+}
+                  </pre>
+              </td>
             </tr>
           </tbody>
           <tbody>
             <tr>
               <td>Allow existing users to deregister</td>
-              <td>/users/email/:username</td>
+              <td>/users/:email/:username</td>
               <td>DELETE</td>
               <td>None</td>
-              <td>Successful DELETE request deregistering a user</td>
+              <td> 
+                {username} was deleted
+              </td>
             </tr>
           </tbody>
       </table>
