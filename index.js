@@ -46,7 +46,7 @@ app.get('/movies/:title', (req, res) => {
 // not yet working - response in not error from .catch but from 
 // Return data about a genre (description) by name/title (e.g., “Thriller”);
 app.get('/movies/genre/:Name', (req, res) => {
-  Movies.findOne({ name:req.params.Name })
+  Movies.findOne({ "Genre.Name" : req.params.Name })
     .then((movie) => {
       res.json(movie.Genre);
     })
@@ -59,7 +59,7 @@ app.get('/movies/genre/:Name', (req, res) => {
 // not yet working
 // Return data about a director (bio, birth year, death year) by name;
 app.get('/movies/director/:Name', (req, res) => {
-  Movies.findOne({ name:req.params.Name})
+  Movies.findOne({ "Director.Name" :req.params.Name})
     .then((movie) => {
       res.json(movie.Director);
     })
@@ -141,7 +141,7 @@ app.put('/users/:Username/movies/:MovieID', (req, res) => {
 
 
 
-// Allow users to remove a movie from their list of favorites);
+// Allow users to remove a movie from their list of favorites;
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username }, 
@@ -159,7 +159,7 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
 });
 
 // Allow existing users to deregister (showing only a text that a user email has been removed—more on this later).
-app.delete('/users/:Email/:Username', (req, res) => {
+app.delete('/users/:Username', (req, res) => {
   Users.findOneAndRemove({ Username: req.params.Username })
     .then((user) => {
       if (!user) {
