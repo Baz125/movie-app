@@ -32,8 +32,8 @@
           <td>GET</td>
           <td>None</td>
           <td>
-            A JSON object containing all movies and their attributes, one
-            example movie is below:
+            Returns a JSON array, each object in the array is a movie, along with its data. All movies will be returned.
+            An example of a single movie is below:
             <pre>
 {
 "_id":{"$oid":"646f65160f0b1af535296045"},
@@ -78,7 +78,6 @@
           <td>
             JSON data containing a genre and its attributes, example:
             <pre>
-"Genre": 
 {
   "Name": "Thriller",
   "Description": "Thriller film, also known as suspense film or suspense thriller, is a broad film genre that involves excitement and suspense in the audience."
@@ -98,7 +97,6 @@
           <td>
             JSON data containing a director and its attributes, example:
             <pre>
-  "Director":  
 {
   "Name": "Jonathan Demme",
   "Bio": "Robert Jonathan Demme was an American director, producer, and screenwriter.",
@@ -125,7 +123,7 @@
   }
                 </pre>
           </td>
-          <td>A Json object showing the fully created object, example:
+          <td>A JSON object showing the fully created object, example:
             <pre>
 {
   "Username": "celia",
@@ -146,7 +144,7 @@
           <td>/users/:username</td>
           <td>PUT</td>
           <td>
-            A json object containing full updated uesr data, example:
+            A JSON object containing full updated uesr data, example:
             <pre>
 {
   "Username": "celia123",
@@ -157,7 +155,7 @@
                   </pre>
           </td>
           <td>
-            A json object containing full updated uesr data, example:
+            A JSON object containing full updated uesr data, example:
             <pre>
 {
   "Username": "celia123",
@@ -179,7 +177,7 @@
           <td>PUT</td>
           <td>None</td>
           <td>
-            A json object containng the full updated user data, example:
+            A JSON object containng the full updated user data, example:
             <pre>
 {
   "_id": "647993734331eac4cba3db6c",
@@ -203,7 +201,7 @@
           <td>DELETE</td>
           <td>None</td>
           <td>
-            A json object containng the full updated user data, example:
+            A JSON object containng the full updated user data, example:
             <pre>
 {
   "_id": "6479b3620ae3367e2c496e05",
