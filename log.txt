@@ -224,3 +224,14 @@ Timestamp: Thu May 18 2023 15:54:39 GMT+0200 (Central European Summer Time)
 ::1 - - [02/Jun/2023:11:01:40 +0000] "DELETE /users/Billabong123/movies/646f70258053843f1d7389ec HTTP/1.1" 200 179
 ::1 - - [02/Jun/2023:11:02:43 +0000] "DELETE /users/Billabong123/movies/646f70258053843f1d7389ec HTTP/1.1" 200 179
 ::1 - - [02/Jun/2023:11:04:29 +0000] "DELETE /users/waltzing@matilda.com/Billabong123/ HTTP/1.1" 200 24
+::1 - - [03/Jun/2023:15:29:14 +0000] "GET /movies/genre/Thriller HTTP/1.1" 200 177
+::1 - - [03/Jun/2023:15:33:33 +0000] "GET /movies/director/Michael%20Mann HTTP/1.1" 200 238
+::1 - - [05/Jun/2023:08:17:27 +0000] "GET /movies/ HTTP/1.1" 200 7310
+::1 - - [05/Jun/2023:08:46:44 +0000] "GET /movies/ HTTP/1.1" 200 7310
+::1 - - [05/Jun/2023:08:48:15 +0000] "GET /movies/genre HTTP/1.1" 200 4
+::1 - - [05/Jun/2023:08:48:19 +0000] "GET /movies/genre/Thriller HTTP/1.1" 200 177
+::1 - - [05/Jun/2023:08:48:24 +0000] "GET /movies/genre/Comedy HTTP/1.1" 200 242
+::1 - - [05/Jun/2023:08:50:28 +0000] "GET /movies/genre/Comedy HTTP/1.1" 200 242
+::1 - - [05/Jun/2023:08:50:33 +0000] "GET /movies/ HTTP/1.1" 200 7310
+::1 - - [05/Jun/2023:08:57:40 +0000] "GET /movies/ HTTP/1.1" 401 -
+::1 - - [05/Jun/2023:12:05:33 +0000] "POST /users HTTP/1.1" 201 183
