@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Models = require('./models.js');
-const bcrypt = require('bcrypt');
+const { check, validationResult } = require('express-validator');
 
 const Movies = Models.Movie;
 const Users = Models.User;
@@ -84,7 +84,17 @@ app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false}
 });
 
 // Allow new users to register;
-app.post('/users', passport.authenticate('jwt', { session: false}),  (req, res) => {
+app.post('/users',
+[
+  check('Username', 'Username is required, 5 character minimum').isLength({min: 5}),
+  check('Username', 'Username contains non alphanumeric charachters - not allowed.').isAlphanumeric(),
+  check('Password', 'Password is required').not().isEmpty(),
+  check('Email', 'Email does not appear to be valid').isEmail()
+], (req, res) => {
+  let errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(442).json({ errors: errors.array() });
+  }
   let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
   .then((user) => {
@@ -207,59 +217,8 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 });
 
-app.listen(8080, () => {
-  console.log('Your app is listening on port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0', () => {
+  console.log('Listening on Port ' + port);
 });
 
-// let movies = [
-//   {
-//     title: 'Interstellar',
-//     director: {
-//       name: 'Christopher Nolan',
-//       birthYear: '1970'
-//     },
-//     genre: 'SciFi',
-//     description: `A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.`,
-//     imageURL: 'https://posters.movieposterdb.com/15_03/2014/816692/l_816692_284eb9d5.jpg'
-//   },  
-//   {
-//     title: 'The Last of the Mohicans',
-//     director: {
-//       name: 'Michael Mann',
-//       birthYear: '1943'
-//     },
-//     genre: 'Historical',
-//     description: 'Three trappers protect the daughters of a British Colonel in the midst of the French and Indian War.',
-//     imageURL: 'https://posters.movieposterdb.com/12_05/1992/104691/l_104691_746b6d56.jpg'
-//   },
-//   {
-//     title: 'Shaun of the Dead',
-//     director: {
-//       name: 'Edgar Wright',
-//       birthYear: '1974'
-//     },
-//     genre: 'Comedy',
-//     description: 'The uneventful, aimless lives of a London electronics salesman and his layabout roommate are disrupted by the zombie apocalypse.',
-//     imageURL: 'https://posters.movieposterdb.com/05_08/2004/0365748/l_47636_0365748_26fdd550.jpg'
-//   },
-//   {
-//     title: 'The Departed',
-//     director: {
-//       name: 'Martin Scorsese',
-//       birthYear: '1942'
-//     },
-//     genre: 'Crime',
-//     description: 'An undercover cop and a mole in the police attempt to identify each other while infiltrating an Irish gang in South Boston.',
-//     imageURL: 'https://posters.movieposterdb.com/06_10/2006/0407887/l_138581_0407887_3f7c779a.jpg'
-//   },
-//   {
-//     title: 'Star Wars: Revenge of the Sith',
-//     director: {
-//       name: 'George Lucas',
-//       birthYear: '1944'
-//     },
-//     genre: 'Fantasy',
-//     description: 'Three years into the Clone Wars, the Jedi rescue Palpatine from Count Dooku. As Obi-Wan pursues a new threat, Anakin acts as a double agent between the Jedi Council and Palpatine and is lured into a sinister plan to rule the galaxy.',
-//     imageURL: 'https://posters.movieposterdb.com/12_04/2005/121766/l_121766_0ba97f41.jpg'
-//   }
-// ];
