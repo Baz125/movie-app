@@ -59,7 +59,6 @@ app.get('/movies/:title', passport.authenticate('jwt', { session: false}), (req,
   }); 
 });
 
-// not yet working - response in not error from .catch but from 
 // Return data about a genre (description) by name/title (e.g., “Thriller”);
 app.get('/movies/genre/:Name', passport.authenticate('jwt', { session: false}), (req, res) => {
   Movies.findOne({ "Genre.Name" : req.params.Name })
@@ -72,7 +71,6 @@ app.get('/movies/genre/:Name', passport.authenticate('jwt', { session: false}), 
     });
 });
 
-// not yet working
 // Return data about a director (bio, birth year, death year) by name;
 app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false}), (req, res) => {
   Movies.findOne({ "Director.Name" :req.params.Name})
@@ -87,6 +85,7 @@ app.get('/movies/director/:Name', passport.authenticate('jwt', { session: false}
 
 // Allow new users to register;
 app.post('/users', passport.authenticate('jwt', { session: false}),  (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOne({ Username: req.body.Username })
   .then((user) => {
     if (user) {
@@ -95,7 +94,7 @@ app.post('/users', passport.authenticate('jwt', { session: false}),  (req, res) 
       Users
         .create({
           Username: req.body.Username,
-          Password: req.body.Password,
+          Password: hashedPassword,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         })
@@ -114,10 +113,11 @@ app.post('/users', passport.authenticate('jwt', { session: false}),  (req, res) 
 
 // Allow users to update their user full info by username;
 app.put('/users/:username', passport.authenticate('jwt', { session: false}), (req, res) => {
+  let hashedPassword = Users.hashPassword(req.body.Password);
   Users.findOneAndUpdate({ Username: req.params.username }, { $set:
     {
       Username: req.body.Username,
-      Password: req.body.Password,
+      Password: hashedPassword,
       Email: req.body.Email,
       Birthday: req.body.Birthday
     }
@@ -134,7 +134,7 @@ app.put('/users/:username', passport.authenticate('jwt', { session: false}), (re
 });
 
 
-//Allow uesrs to add a move to their favourites
+//Allow uesrs to add a movie to their favourites
 app.put('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { session: false}), (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
