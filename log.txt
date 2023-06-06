@@ -236,3 +236,9 @@ Timestamp: Thu May 18 2023 15:54:39 GMT+0200 (Central European Summer Time)
 ::1 - - [05/Jun/2023:08:57:40 +0000] "GET /movies/ HTTP/1.1" 401 -
 ::1 - - [05/Jun/2023:12:05:33 +0000] "POST /users HTTP/1.1" 201 183
 ::1 - - [05/Jun/2023:12:55:11 +0000] "GET /movies HTTP/1.1" 401 -
+::1 - - [05/Jun/2023:15:01:47 +0000] "POST /user HTTP/1.1" 404 144
+::1 - - [05/Jun/2023:15:02:42 +0000] "POST /user HTTP/1.1" 404 144
+::1 - - [05/Jun/2023:15:03:07 +0000] "POST /users HTTP/1.1" 500 16
+::1 - - [05/Jun/2023:15:06:14 +0000] "POST /users HTTP/1.1" 500 109
+::1 - - [05/Jun/2023:15:07:34 +0000] "POST /users HTTP/1.1" 500 109
+::1 - - [05/Jun/2023:15:12:05 +0000] "POST /users HTTP/1.1" 201 225
