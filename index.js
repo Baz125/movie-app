@@ -5,7 +5,7 @@ const { check, validationResult } = require('express-validator');
 const Movies = Models.Movie;
 const Users = Models.User;
 
-mongoose.connect('mongodb://127.0.0.1:27017/movieDB',  {useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI,  {useNewUrlParser: true, useUnifiedTopology: true });
 const express = require('express');
 const  morgan = require('morgan'),
   fs = require('fs'),
@@ -221,4 +221,3 @@ const port = process.env.PORT || 3000;
 app.listen(port, '0.0.0.0', () => {
   console.log('Listening on Port ' + port);
 });
-
