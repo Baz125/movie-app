@@ -2,6 +2,7 @@ const passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     Models = require('./models.js'),
     passportJWT = require('passport-jwt');
+let bcrypt = require('bcrypt');
 
 let Users = Models.User,
     JWTStrategy = passportJWT.Strategy,
@@ -10,13 +11,14 @@ let Users = Models.User,
 passport.use(
     new LocalStrategy(
     {
-        usernameField: 'username',
+        usernameField: 'username', // username relates to the key in postman
         passwordField: 'password'
     }, 
     (username, password, callback) => {
         console.log(username + ' ' + password);
         Users.findOne({ Username: username }).then(user => {
-            if (user && user.Password === password) {
+            const isPasswordEqual = bcrypt.compare(password, user.password);
+            if (isPasswordEqual) {
                 console.log("finished");
                 return callback(null, user);
             } else {
@@ -28,7 +30,6 @@ passport.use(
         });
     }
 ));
-
 
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
