@@ -143,7 +143,7 @@ app.post(
           Users.create({
             Username: req.body.username,
             Password: hashedPassword,
-            Email: req.body.Email,
+            Email: req.body.email,
             Birthday: req.body.Birthday
           })
             .then((user) => {
@@ -174,7 +174,7 @@ app.put(
         $set: {
           Username: req.body.username,
           Password: hashedPassword,
-          Email: req.body.Email,
+          Email: req.body.email,
           Birthday: req.body.Birthday
         }
       },
