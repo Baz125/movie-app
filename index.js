@@ -195,19 +195,46 @@ app.put(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Users.findOneAndUpdate(
-      { Username: req.params.Username },
-      { $push: { FavoriteMovies: req.params.MovieID } },
-      { new: true }
-    )
-      .then((updatedUser) => {
-        if (!updatedUser) {
-          console.error("User not found");
-          return res.status(404).send("User not found");
-        } else {
-          console.log("Movie added to favorites:", req.params.MovieID);
-          res.json(updatedUser);
+    //if there is a movie with that ID
+    Movies.findOne({ MovieID: req.params.MovieID })
+      .then((movie) => {
+        if (!movie) {
+          console.error("Movie not found");
+          return res.status(404).send("Movie not found");
         }
+        //if the user already has that ID attached to favourites
+        Users.findOne({
+          FavouriteMovie: req.params.MovieID,
+          Username: req.params.Username
+        })
+          .then((user) => {
+            if (user) {
+              console.error("Movie already in favourites");
+              return res.status(404).send("Movie already in favourites");
+            }
+            Users.findOneAndUpdate(
+              { Username: req.params.Username },
+              { $push: { FavoriteMovies: req.params.MovieID } },
+              { new: true }
+            )
+              .then((updatedUser) => {
+                if (!updatedUser) {
+                  console.error("User not found");
+                  return res.status(404).send("User not found");
+                } else
+                  console.log("Movie added to favorites:", req.params.MovieID);
+                res.json(updatedUser);
+              })
+
+              .catch((err) => {
+                console.error(err);
+                res.status(500).send("Error: " + err);
+              });
+          })
+          .catch((err) => {
+            console.error(err);
+            res.status(500).send("Error: " + err);
+          });
       })
       .catch((err) => {
         console.error(err);
