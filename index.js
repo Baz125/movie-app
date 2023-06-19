@@ -54,7 +54,7 @@ auth = require("./auth")(app);
 // Return a list of ALL movies to the user
 app.get(
   "/movies",
-  // passport.authenticate("jwt", { session: false }), remvoed for client testing
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
