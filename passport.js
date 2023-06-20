@@ -18,6 +18,10 @@ passport.use(
       console.log(username + " " + password);
       Users.findOne({ Username: username })
         .then((user) => {
+          if (!user)
+            return callback(null, false, {
+              message: "Incorrect username or password."
+            });
           const isPasswordEqual = bcrypt.compare(password, user.password);
           if (isPasswordEqual) {
             console.log("finished");

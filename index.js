@@ -24,6 +24,7 @@ let allowedOrigins = ["http://localhost:1234", "http://testsite.com"];
 app.use(
   cors({
     origin: (origin, callback) => {
+      console.log("check origin", origin, allowedOrigins);
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) === -1) {
         let message =
