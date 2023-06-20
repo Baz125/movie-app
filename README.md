@@ -5,7 +5,7 @@ This repe contains the server-side of the movie-app project.
 It contains a working API but no UI, all functionality mentioned below is avilable and working via API request only.
 
 Users can receive information on movies, directors, and genres so that they
-can learn more about movies they've watched or are interested in. They can also createa  profile and save their favourite moveies.
+can learn more about movies they've watched or are interested in. They can also createa profile and save their favourite moveies.
 
 The server side is built on Node.js, Express, MongoDB and hosted on Heroku.
 
