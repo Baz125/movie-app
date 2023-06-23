@@ -22,15 +22,37 @@ passport.use(
             return callback(null, false, {
               message: "Incorrect username or password."
             });
-          const isPasswordEqual = bcrypt.compare(password, user.password);
-          if (isPasswordEqual) {
-            console.log("finished");
-            return callback(null, user);
-          } else {
-            return callback(null, false, {
-              message: "Incorrect username or password."
+          //Commenting out original code to try a change suggested by ChatGPT(below)
+          //   const isPasswordEqual = bcrypt.compare(password, user.password);
+          //   if (isPasswordEqual) {
+          //     console.log("finished");
+          //     return callback(null, user);
+          //   } else {
+          //     return callback(null, false, {
+          //       message: "Incorrect username or password."
+          //     });
+          //   }
+          // })
+          // .catch((error) => {
+          //   console.log(error);
+          //   return callback(error);
+          // });
+          bcrypt
+            .compare(password, user.password)
+            .then((isPasswordEqual) => {
+              if (isPasswordEqual) {
+                console.log("finished");
+                return callback(null, user);
+              } else {
+                return callback(null, false, {
+                  message: "Incorrect username or password."
+                });
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              return callback(error);
             });
-          }
         })
         .catch((error) => {
           console.log(error);
