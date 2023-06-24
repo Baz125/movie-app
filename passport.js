@@ -38,7 +38,7 @@ passport.use(
           //   return callback(error);
           // });
           bcrypt
-            .compare(password, Users.Password)
+            .compare(password, user.Password)
             .then((isPasswordEqual) => {
               if (isPasswordEqual) {
                 console.log("finished");
