@@ -190,7 +190,7 @@ app.put(
       {
         $set: {
           Username: req.body.username,
-          // Password: hashedPassword,
+          Password: hashedPassword,
           Email: req.body.email,
           Birthday: req.body.Birthday
         }
@@ -213,7 +213,7 @@ app.put(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     //if there is a movie with that ID
-    Movies.findOne({ MovieID: req.params.MovieID })
+    Movies.findOne({ _id: req.params.MovieID })
       .then((movie) => {
         if (!movie) {
           console.error("Movie not found");
