@@ -100,7 +100,7 @@ app.get(
   }
 );
 
-// Return a users favorite movies
+// Return a user's favorite movies
 app.get(
   "/users/:username/favoritemovies",
   passport.authenticate("jwt", { session: false }),
@@ -200,13 +200,13 @@ app.put(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    let hashedPassword = Users.hashPassword(req.body.password);
+    // let hashedPassword = Users.hashPassword(req.body.password);
     Users.findOneAndUpdate(
       { Username: req.params.username },
       {
         $set: {
           Username: req.body.username,
-          Password: hashedPassword,
+          // Password: hashedPassword,
           Email: req.body.email,
           Birthday: req.body.Birthday
         }
