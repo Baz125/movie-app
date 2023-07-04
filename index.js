@@ -100,6 +100,22 @@ app.get(
   }
 );
 
+// Return a users favorite movies
+app.get(
+  "/users/:username/favoritemovies",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.params.username })
+      .then((user) => {
+        res.json(user.FavoriteMovies);
+      })
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
+
 // Return data about a genre (description) by name/title (e.g., “Thriller”);
 app.get(
   "/movies/genre/:name",
