@@ -241,7 +241,9 @@ app.put(
         }
       }
     };
-    Users.updateOne(filter, update);
+    Users.updateOne(filter, update)
+      .then(() => res.json(updatedUser))
+      .catch((err) => req.json(err));
     //if there is a movie with that ID
     //   Movies.findOne({ _id: req.params.MovieID })
     //     .then((movie) => {
