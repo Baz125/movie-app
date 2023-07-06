@@ -239,7 +239,7 @@ app.put(
         FavoriteMovies: {
           $each: [req.params.MovieID]
         }
-      }
+      }git 
     };
     Users.updateOne(filter, update)
       .then(() => {
