@@ -157,7 +157,7 @@ app.post(
   "/users",
   [
     check("username", "Username is required, 5 character minimum").isLength({
-      min: 5
+      min: 3
     }),
     check(
       "username",
@@ -209,9 +209,9 @@ app.put(
       { Username: req.params.username },
       {
         $set: {
-          Username: req.body.username,
+          Username: req.body.Username,
           // Password: hashedPassword,
-          Email: req.body.email,
+          Email: req.body.Email,
           Birthday: req.body.Birthday
         }
       },
