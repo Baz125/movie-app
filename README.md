@@ -1,6 +1,6 @@
 # movie-app
 
-This repe contains the server-side of the movie-app project.
+This repo contains the server-side of the movie-app project.
 
 It contains a working API but no UI, all functionality mentioned below is avilable and working via API request only.
 
