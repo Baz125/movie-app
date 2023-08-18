@@ -23,8 +23,10 @@ const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:1234",
   "http://testsite.com",
-  "https://baz125myflix.netlify.app"
+  "https://baz125myflix.netlify.app",
+  "http://localhost:4200"
 ];
+
 app.use(
   cors({
     origin: (origin, callback) => {
