@@ -24,7 +24,8 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://testsite.com",
   "https://baz125myflix.netlify.app",
-  "http://localhost:4200"
+  "http://localhost:4200",
+  "https://baz125.github.io"
 ];
 
 app.use(
