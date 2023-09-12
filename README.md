@@ -1,6 +1,6 @@
 # Movie App API
 
-Welcome to Movie App Server-Side. This fully functioanl RESTful API provides users with access to information about movies, directors, and genres. Users can sign up, update their personal information, and create a list of their favorite movies. This project demonstrates full-stack JavaScript development expertise using the MERN (MongoDB, Express, React, and Node.js) stack.
+Welcome to Movie App Server-Side. This fully functional RESTful API provides users with access to information about movies, directors, and genres. Users can sign up, update their personal information, and create a list of their favorite movies. This project demonstrates full-stack JavaScript development expertise using the MERN (MongoDB, Express, React, and Node.js) stack.
 
 ## Table of Contents
 
@@ -13,8 +13,6 @@ Welcome to Movie App Server-Side. This fully functioanl RESTful API provides use
 - [Testing](#testing)
 - [Documentation](#documentation)
 - [Deployment](#deployment)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -56,35 +54,33 @@ The API provides the following endpoints:
 - `DELETE /users/:username/movies/:movieID` - Allows users to remove a movie from their list of favorites.
 - `DELETE /users/:username` - Allows existing users to deregister.
 
-### Authentication
+## Authentication
 
 Passport is used to implement basic HTTP authentication for login. Json Web Tokens are then used for subsequent requests.
 
-### Data Validation
+## Data Validation
 
 Data sent to the API is validated to ensure its integrity and security, using Express Validator
 
-### Data Security
+## Data Security
 
 Passwords are hashed and salted using bcrypt and only hashed passwords are stored.
 Environment variables are used to secure 3-party vendors.
 
-### Testing
+## Testing
 
 The API has been thoroughly tested using Postman to ensure its functionality.
 
-### Documentation
+## Documentation
 
 Full API documentation is available in this repo at public/documentation.html
 
-### Deployment
+## Deployment
 
-The API is deployed to Heroku and is accessible at https://moviedb125.herokuapp.com/.
+The API is deployed to Heroku and is accessible at https://moviedb125.herokuapp.com/
+
 Front-end built with React: https://baz125myflix.netlify.app/
+
 Front-end build with Angular: https://baz125.github.io/WatchList_Angular_Client/welcome
-
-## Contributing
-
-Contributions are welcome! Feel free to open issues and submit pull requests to help improve this project.
 
 
