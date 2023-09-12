@@ -1,28 +1,86 @@
-# movie-app
+# Movie App API
 
-This repo contains the server-side of the movie-app project.
+Welcome to Movie App Server-Side. This fully functional RESTful API provides users with access to information about movies, directors, and genres. Users can sign up, update their personal information, and create a list of their favorite movies. This project demonstrates full-stack JavaScript development expertise using the MERN (MongoDB, Express, React, and Node.js) stack.
 
-It contains a working API but no UI, all functionality mentioned below is avilable and working via API request only.
+## Table of Contents
 
-Users can receive information on movies, directors, and genres so that they
-can learn more about movies they've watched or are interested in. They can also createa profile and save their favourite moveies.
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Endpoints](#endpoints)
+- [Authentication](#authentication)
+- [Data Validation](#data-validation)
+- [Data Secutiry](#data-security)
+- [Testing](#testing)
+- [Documentation](#documentation)
+- [Deployment](#deployment)
 
-The server side is built on Node.js, Express, MongoDB and hosted on Heroku.
+## Features
 
-To get started, first register as a user per documentation.html. Then log in using /login endpoint, passing username:username and password:passwerd as x-www-form-urlencoded key value pairs to receive a valid JSON web token(JWT). Passwords will be hashed using bcrypt.
+1. Return a list of ALL movies to the user.
+2. Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user.
+3. Return data about a genre (description) by name/title (e.g., “Thriller”).
+4. Return data about a director (bio, birth year, death year) by name.
+5. Allow new users to register.
+6. Allow users to update their user info (username, password, email, date of birth).
+7. Allow users to add a movie to their list of favorites.
+8. Allow users to remove a movie from their list of favorites.
+9. Allow existing users to deregister.
 
-All further functionality will require a valid JWT to be passed as a Bearer Token for autorization.
+## Technologies Used
 
-documentation.html gives further information on how to interact with APIs offering the following functionality:
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- JSON Web Tokens (JWT) for authentication
+- bcrypt for password hashing
+- Heroku for deployment
+- CORS
+- Passport
+- Express Validator
+- Postman
 
-Essential Features
-● Return a list of ALL movies to the user
-● Return data (description, genre, director, image URL, whether it’s featured or not) about a
-single movie by title to the user
-● Return data about a genre (description) by name/title (e.g., “Thriller”)
-● Return data about a director (bio, birth year, death year) by name
-● Allow new users to register
-● Allow users to update their user info (username, password, email, date of birth)
-● Allow users to add a movie to their list of favorites
-● Allow users to remove a movie from their list of favorites
-● Allow existing users to deregister
+## Endpoints
+
+The API provides the following endpoints:
+
+- `GET /movies` - Returns a list of all movies.
+- `GET /movies/:title` - Returns data about a single movie by title.
+- `GET /genres/:name` - Returns data about a genre by name.
+- `GET /directors/:name` - Returns data about a director by name.
+- `POST /users` - Allows new users to register.
+- `PUT /users/:username` - Allows users to update their user info.
+- `POST /users/:username/movies/:movieID` - Allows users to add a movie to their list of favorites.
+- `DELETE /users/:username/movies/:movieID` - Allows users to remove a movie from their list of favorites.
+- `DELETE /users/:username` - Allows existing users to deregister.
+
+## Authentication
+
+Passport is used to implement basic HTTP authentication for login. Json Web Tokens are then used for subsequent requests.
+
+## Data Validation
+
+Data sent to the API is validated to ensure its integrity and security, using Express Validator
+
+## Data Security
+
+Passwords are hashed and salted using bcrypt and only hashed passwords are stored.
+Environment variables are used to secure 3-party vendors.
+
+## Testing
+
+The API has been thoroughly tested using Postman to ensure its functionality.
+
+## Documentation
+
+Full API documentation is available in this repo at public/documentation.html
+
+## Deployment
+
+The API is deployed to Heroku and is accessible at https://moviedb125.herokuapp.com/
+
+Front-end built with React: https://baz125myflix.netlify.app/
+
+Front-end build with Angular: https://baz125.github.io/WatchList_Angular_Client/welcome
+
+
