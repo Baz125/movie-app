@@ -5,12 +5,19 @@ const { check, validationResult } = require("express-validator");
 const Movies = Models.Movie;
 const Users = Models.User;
 
+/**
+ * uses the mongoose library to connect to mongoDB
+ */
+
 mongoose.connect(process.env.CONNECTION_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
 
 const express = require("express");
+
+
+
 const morgan = require("morgan"),
   fs = require("fs"),
   path = require("path"),
@@ -18,7 +25,9 @@ const morgan = require("morgan"),
 
 const app = express();
 
-// CORS
+/**
+ * List of allowed CORS origins
+ */
 const cors = require("cors");
 let allowedOrigins = [
   "http://localhost:1234",
@@ -59,7 +68,10 @@ app.use(express.static("public"));
 // Auth router - needs to be after cors and body parse (basically after all middlwares)
 auth = require("./auth")(app);
 
-// Return a list of ALL movies to the user
+
+/**
+ * Return a list of ALL movies to the user
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -75,7 +87,9 @@ app.get(
   }
 );
 
-//  Return data about a single movie by title to the user
+/**
+ * Return data about a single movie by title to the user
+ */
 app.get(
   "/movies/:title",
   passport.authenticate("jwt", { session: false }),
@@ -91,7 +105,9 @@ app.get(
   }
 );
 
-//  Return data about a single user by title to the user
+/**
+ * Return data about a single user by title to the user
+ */
 app.get(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
@@ -107,7 +123,9 @@ app.get(
   }
 );
 
-// Return a user's favorite movies
+/**
+ * Return a user's favorite movies
+ */
 app.get(
   "/users/:username/favoritemovies",
   passport.authenticate("jwt", { session: false }),
@@ -123,7 +141,9 @@ app.get(
   }
 );
 
-// Return data about a genre (description) by name/title (e.g., “Thriller”);
+/**
+ * Return data about a genre (description) by name/title (e.g., “Thriller”);
+ */
 app.get(
   "/movies/genre/:name",
   passport.authenticate("jwt", { session: false }),
@@ -139,7 +159,9 @@ app.get(
   }
 );
 
-// Return data about a director (bio, birth year, death year) by name;
+/**
+ * Return data about a director (bio, birth year, death year) by name;
+ */ 
 app.get(
   "/movies/director/:name",
   passport.authenticate("jwt", { session: false }),
@@ -155,7 +177,9 @@ app.get(
   }
 );
 
-// Allow new users to register;
+/**
+ * Allow new users to register;
+ */
 app.post(
   "/users",
   [
@@ -201,8 +225,9 @@ app.post(
       });
   }
 );
-
-// Allow users to update their user full info by username;
+/**
+ * Allow users to update their user full info by username;
+ */
 app.put(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
@@ -230,7 +255,9 @@ app.put(
   }
 );
 
-//Allow uesrs to add a movie to their favourites
+/**
+ * Allow uesrs to add a movie to their favourites
+ */
 app.put(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -302,7 +329,9 @@ app.put(
 //       res.status(500).send("Error: " + err);
 //     });
 
-// Allow users to remove a movie from their list of favorites;
+/**
+ * Allow users to remove a movie from their list of favorites;
+ */
 app.delete(
   "/users/:Username/movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
@@ -326,7 +355,9 @@ app.delete(
   }
 );
 
-// Allow existing users to deregister (showing only a text that a user email has been removed—more on this later).
+/**
+ * Allow existing users to deregister (showing only a text that a user email has been removed—more on this later).
+ */
 app.delete(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
@@ -346,7 +377,9 @@ app.delete(
   }
 );
 
-//Allow users to get information about a user
+/**
+ * Allow users to get information about a user
+ */
 app.get(
   "/users/:Username",
   passport.authenticate("jwt", { session: false }),
