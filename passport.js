@@ -1,3 +1,7 @@
+/**
+ * Passport authentication configuration.
+ * @module passportConfig
+ */
 const passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy,
   Models = require("./models.js"),
@@ -8,6 +12,12 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
+/**
+ * Configures the LocalStrategy for username and password authentication.
+ * @function
+ * @name configureLocalStrategy
+ * @memberof module:passportConfig
+ */
 passport.use(
   new LocalStrategy(
     {
@@ -22,21 +32,6 @@ passport.use(
             return callback(null, false, {
               message: "Incorrect username or password."
             });
-          //Commenting out original code to try a change suggested by ChatGPT(below)
-          //   const isPasswordEqual = bcrypt.compare(password, user.password);
-          //   if (isPasswordEqual) {
-          //     console.log("finished");
-          //     return callback(null, user);
-          //   } else {
-          //     return callback(null, false, {
-          //       message: "Incorrect username or password."
-          //     });
-          //   }
-          // })
-          // .catch((error) => {
-          //   console.log(error);
-          //   return callback(error);
-          // });
           bcrypt
             .compare(password, user.Password)
             .then((isPasswordEqual) => {
@@ -62,6 +57,12 @@ passport.use(
   )
 );
 
+/**
+ * Configures the JWTStrategy for token-based authentication.
+ * @function
+ * @name configureJWTStrategy
+ * @memberof module:passportConfig
+ */
 passport.use(
   new JWTStrategy(
     {

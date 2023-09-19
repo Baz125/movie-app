@@ -6,7 +6,10 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 /**
- * uses the mongoose library to connect to mongoDB
+ * Establishes a connection to MongoDB using the mongoose library.
+ *
+ * @function
+ * @name connectToDatabase
  */
 
 mongoose.connect(process.env.CONNECTION_URI, {
@@ -14,19 +17,31 @@ mongoose.connect(process.env.CONNECTION_URI, {
   useUnifiedTopology: true
 });
 
+/**
+ * @requires express
+ */
 const express = require("express");
 
 
-
+/**
+ * @requires morgan
+ */
 const morgan = require("morgan"),
   fs = require("fs"),
   path = require("path"),
   bodyParser = require("body-parser");
 
+  /**
+   * Uses express server
+   */
 const app = express();
 
 /**
  * List of allowed CORS origins
+ * @requires cors
+ * @constant
+ * @name allowedOrigins
+ * @type {Array}
  */
 const cors = require("cors");
 let allowedOrigins = [
@@ -53,6 +68,12 @@ app.use(
   })
 );
 
+
+/**
+ * Passport is required for authentication.
+ * 
+ * @requires passport 
+ */
 const passport = require("passport");
 require("./passport");
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "log.txt"), {
@@ -70,7 +91,13 @@ auth = require("./auth")(app);
 
 
 /**
- * Return a list of ALL movies to the user
+ * Retrieves a list of all movies.
+ *
+ * @function
+ * @name getAllMovies
+ * @param {string} - The endpoint for retrieving movies.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/movies",
@@ -88,7 +115,13 @@ app.get(
 );
 
 /**
- * Return data about a single movie by title to the user
+ * Retrieves data about a single movie by title.
+ *
+ * @function
+ * @name getMovieByTitle
+ * @param {string} - The endpoint for retrieving a movie by title.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/movies/:title",
@@ -106,7 +139,13 @@ app.get(
 );
 
 /**
- * Return data about a single user by title to the user
+ * Retrieves data about a single user by username.
+ *
+ * @function
+ * @name getUserByUsername
+ * @param {string} - The endpoint for retrieving a user by username.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/users/:username",
@@ -124,7 +163,13 @@ app.get(
 );
 
 /**
- * Return a user's favorite movies
+ * Retrieves a user's favorite movies.
+ *
+ * @function
+ * @name getUserFavoriteMovies
+ * @param {string} - The endpoint for retrieving a user's favorite movies.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/users/:username/favoritemovies",
@@ -142,7 +187,13 @@ app.get(
 );
 
 /**
- * Return data about a genre (description) by name/title (e.g., “Thriller”);
+ * Retrieves data about a genre (description) by name/title (e.g., “Thriller”).
+ *
+ * @function
+ * @name getGenreByName
+ * @param {string} - The endpoint for retrieving a genre by name.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/movies/genre/:name",
@@ -160,8 +211,14 @@ app.get(
 );
 
 /**
- * Return data about a director (bio, birth year, death year) by name;
- */ 
+ * Retrieves data about a director (bio, birth year, death year) by name.
+ *
+ * @function
+ * @name getDirectorByName
+ * @param {string} - The endpoint for retrieving a director by name.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
+ */
 app.get(
   "/movies/director/:name",
   passport.authenticate("jwt", { session: false }),
@@ -178,7 +235,13 @@ app.get(
 );
 
 /**
- * Allow new users to register;
+ * Allows new users to register.
+ *
+ * @function
+ * @name registerUser
+ * @param {string} - The endpoint for user registration.
+ * @param {array} - checks for username, password, and email.
+ * @param {function}- Request and response handlers.
  */
 app.post(
   "/users",
@@ -226,7 +289,13 @@ app.post(
   }
 );
 /**
- * Allow users to update their user full info by username;
+ * Allows users to update their user information by username.
+ *
+ * @function
+ * @name updateUserByUsername
+ * @param {string} - The endpoint for updating user information.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.put(
   "/users/:username",
@@ -256,7 +325,13 @@ app.put(
 );
 
 /**
- * Allow uesrs to add a movie to their favourites
+ * Allows users to add a movie to their list of favorite movies.
+ *
+ * @function
+ * @name addUserFavoriteMovie
+ * @param {string} - The endpoint for adding a movie to favorites.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.put(
   "/users/:Username/movies/:MovieID",
@@ -330,7 +405,13 @@ app.put(
 //     });
 
 /**
- * Allow users to remove a movie from their list of favorites;
+ * Allows users to remove a movie from their list of favorite movies.
+ *
+ * @function
+ * @name removeUserFavoriteMovie
+ * @param {string} - The endpoint for removing a movie from favorites.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.delete(
   "/users/:Username/movies/:MovieID",
@@ -356,7 +437,13 @@ app.delete(
 );
 
 /**
- * Allow existing users to deregister (showing only a text that a user email has been removed—more on this later).
+ * Allows existing users to deregister.
+ *
+ * @function
+ * @name deregisterUser
+ * @param {string} - The endpoint for user deregistration.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.delete(
   "/users/:Username",
@@ -378,7 +465,13 @@ app.delete(
 );
 
 /**
- * Allow users to get information about a user
+ * Retrieves information about a user by username.
+ *
+ * @function
+ * @name getUserInfoByUsername
+ * @param {string} - The endpoint for retrieving user information.
+ * @param {function} - Passport JWT authentication middleware.
+ * @param {function} - Request and response handlers.
  */
 app.get(
   "/users/:Username",
